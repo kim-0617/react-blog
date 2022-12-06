@@ -3,7 +3,10 @@ const app = express();
 const dotenv = require("dotenv");
 const multer = require("multer");
 const path = require("path");
+const cors = require("cors");
 const mongoose = require("mongoose");
+
+const PORT = process.env.PORT || 5000;
 
 const authRoute = require("./routes/auth");
 const userRoute = require("./routes/users");
@@ -13,6 +16,7 @@ const { diskStorage } = require("multer");
 const { db } = require("./models/User");
 
 dotenv.config();
+app.use(cors());
 app.use(express.json());
 app.use("/images", express.static(path.join(__dirname, "/images")));
 
@@ -47,6 +51,6 @@ app.use("/api/users", userRoute);
 app.use("/api/posts", postRoute);
 app.use("/api/categories", categoryRoute);
 
-app.listen("5000", () => {
+app.listen(PORT, () => {
   console.log("Backend is running");
 });
